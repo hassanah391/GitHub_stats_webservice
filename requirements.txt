@@ -3,3 +3,4 @@ gunicorn
 flask-cors  # Optional, for handling CORS
 redis
 flask_caching
+requests
