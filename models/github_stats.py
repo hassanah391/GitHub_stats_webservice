@@ -48,7 +48,10 @@ class GitHubStats:
             )
 
             response = requests.get(
-                url, headers={"User-Agent": "GitHubStatsApp"}
+                url, headers={"User-Agent": "GitHubStatsApp",
+                              "Accept": "application/vnd.github+json",
+                              "X-GitHub-Api-Version": "2022-11-28",
+                              }
                 )
 
             if (
@@ -83,7 +86,10 @@ class GitHubStats:
         - If the request fails, it returns an error message.
         """
         url = f"{GitHubStats.BASE_URL}/users/{username}"
-        response = requests.get(url, headers={"User-Agent": "GitHubStatsApp"})
+        response = requests.get(url, headers={"User-Agent": "GitHubStatsApp",
+                              "Accept": "application/vnd.github+json",
+                              "X-GitHub-Api-Version": "2022-11-28",
+                              })
 
         if (
             response.status_code == 403
@@ -119,7 +125,10 @@ class GitHubStats:
         """
         repos_list = []
         page = 1
-        headers = {"User-Agent": "GitHubStatsApp"}
+        headers = {"User-Agent": "GitHubStatsApp",
+                              "Accept": "application/vnd.github+json",
+                              "X-GitHub-Api-Version": "2022-11-28",
+                              }
 
         while True:
             url = (
@@ -174,7 +183,10 @@ class GitHubStats:
         if isinstance(repos, dict) and "error" in repos:
             return repos  # Return the error message from get_user_repos
 
-        headers = {"User-Agent": "GitHubStatsApp"}
+        headers = {"User-Agent": "GitHubStatsApp",
+                              "Accept": "application/vnd.github+json",
+                              "X-GitHub-Api-Version": "2022-11-28",
+                              }
         total_bytes = 0
 
         for repo in repos:
