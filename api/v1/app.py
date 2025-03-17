@@ -2,7 +2,7 @@
 """app.py to connect to API"""
 import os
 from api.v1.github_routes import app_views, cache
-from flask import Flask, Blueprint, jsonify, make_response
+from flask import Flask, Blueprint, jsonify, make_response, render_template
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -17,6 +17,11 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 @app.errorhandler(404)
 def page_not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
