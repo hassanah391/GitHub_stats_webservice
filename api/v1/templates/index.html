@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Profile Analyzer Pro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2F80ED;
+      --secondary: #56CCF2;
+      --text: #333333;
+      --background: #f8f9fa;
+      --error: #e74c3c;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      margin: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .form-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .loading {
+      position: absolute;
+      right: -40px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+    }
+
+    .form-container input[type="text"] {
+      flex: 1;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .form-container input[type="text"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 8px rgba(47, 128, 237, 0.3);
+      outline: none;
+    }
+
+    .form-container button {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border: none;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .form-container button:hover {
+      background: #2568c7;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+    }
+
+    .card {
+      display: flex;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card .avatar-section {
+      flex: 0 0 250px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card .avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .card .info-section {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-item {
+      background: var(--background);
+      padding: 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .stat-item i {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .languages-section {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: var(--background);
+      border-radius: 12px;
+    }
+
+    .languages-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .language-item {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .language-percent {
+      background: rgba(255,255,255,0.2);
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+      }
+      
+      .avatar-section {
+        flex: none;
+        padding: 1.5rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <input type="text" id="github_username" placeholder="Enter GitHub username..." required>
+      <button id="submitBtn">
+        <i class="fas fa-search"></i> Generate Report
+      </button>
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+    </div>
+    <div id="githubResult"></div>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById('submitBtn');
+    const loading = document.querySelector('.loading');
+
+    submitBtn.addEventListener('click', async function() {
+      const username = document.getElementById('github_username').value.trim();
+      if(!username) return;
+
+      try {
+        loading.style.display = 'block';
+        submitBtn.disabled = true;
+
+        const [userRes, langRes] = await Promise.all([
+          fetch(`/api/v1/github/${username}`),
+          fetch(`/api/v1/github/${username}/languages`)
+        ]);
+
+        const userData = await userRes.json();
+        const langData = await langRes.json();
+
+        if(userData.error || langData.error) {
+          throw new Error(userData.error || langData.error);
+        }
+
+        // Calculate language percentages
+        const totalBytes = Object.values(langData).reduce((sum, bytes) => sum + bytes, 0);
+        const languages = {};
+        
+        for(const [lang, bytes] of Object.entries(langData)) {
+          const percent = totalBytes > 0 ? (bytes / totalBytes * 100).toFixed(2) : 0;
+          languages[lang] = percent;
+        }
+
+        const combinedData = {
+          ...userData,
+          languages,
+          totalLanguages: Object.keys(languages).length
+        };
+
+        renderProfile(combinedData);
+      } catch (error) {
+        showError(error.message);
+      } finally {
+        loading.style.display = 'none';
+        submitBtn.disabled = false;
+      }
+    });
+
+    function renderProfile(data) {
+      const cardHTML = `
+        <div class="card">
+          <div class="avatar-section">
+            <img src="${data.avatar_url}" alt="${data.login}" class="avatar">
+            <div class="view-profile">
+              <a href="${data.html_url}" target="_blank" class="profile-link">Visit Profile</a>
+            </div>
+            <div class="stats-grid mini-stats">
+              ${createStatItem('fas fa-code', data.totalLanguages, 'Languages')}
+              ${createStatItem('fas fa-star', data.public_repos, 'Repos')}
+            </div>
+          </div>
+          
+          <div class="info-section">
+            <h2>${data.name || data.login}</h2>
+            ${data.bio ? `<p class="bio">${data.bio}</p>` : ''}
+            
+            <div class="stats-grid">
+              ${createStatItem('fas fa-users', data.followers, 'Followers')}
+              ${createStatItem('fas fa-user-friends', data.following, 'Following')}
+              ${createStatItem('fas fa-code-branch', data.public_repos, 'Repositories')}
+            </div>
+
+            <div class="languages-section">
+              <h3>Top Languages (${data.totalLanguages})</h3>
+              <div class="languages-grid">
+                ${Object.entries(data.languages).map(([lang, percent]) => `
+                  <div class="language-item">
+                    <span>${lang}</span>
+                    <span class="language-percent">${percent}%</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('githubResult').innerHTML = cardHTML;
+    }
+
+    function createStatItem(icon, value, label) {
+      return `
+        <div class="stat-item">
+          <i class="${icon}"></i>
+          <div>${value}</div>
+          <small>${label}</small>
+        </div>
+      `;
+    }
+
+    function showError(message) {
+      const errorHTML = `
+        <div class="error-card" style="color: var(--error); padding: 2rem; text-align: center;">
+          <i class="fas fa-exclamation-triangle"></i>
+          <p>${message || 'Error fetching data'}</p>
+        </div>
+      `;
+      document.getElementById('githubResult').innerHTML = errorHTML;
+    }
+  </script>
+</body>
+</html>
