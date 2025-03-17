@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config["CACHE_TYPE"] = "redis"
 app.config["CACHE_REDIS_HOST"] = "localhost"
 app.config["CACHE_REDIS_PORT"] = 6379
+app.config["CACHE_REDIS_URL"] = "redis://default:ObPZZQhQfOyVFBGFQbNJSRORRVJoACAh@redis.railway.internal:6379"
 cache.init_app(app)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
