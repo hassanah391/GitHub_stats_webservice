@@ -39,3 +39,8 @@ def get_github_user_repos(username):
 def get_github_user_languages(username):
     stats = GitHubStats.get_language_breakdown(username)
     return jsonify(stats)
+
+
+@app_views.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy"}), 200
