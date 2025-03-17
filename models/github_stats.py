@@ -27,11 +27,14 @@ Usage:
     # Get language breakdown
     languages = GitHubStats.get_language_breakdown("username")
 """
+import os
 import requests
 
 
 class GitHubStats:
     """GitHub Stats"""
+    # Get the GitHub token from environment variables
+    GITHUB_PAT = os.getenv("GITHUB_PAT")
 
     BASE_URL = "https://api.github.com"
 
@@ -47,11 +50,15 @@ class GitHubStats:
                 f"?per_page=100&page={page}"
             )
 
-            response = requests.get(
-                url, headers={"User-Agent": "GitHubStatsApp",
+            headers = {"User-Agent": "GitHubStatsApp",
                               "Accept": "application/vnd.github+json",
                               "X-GitHub-Api-Version": "2022-11-28",
                               }
+
+            if GitHubStats.GITHUB_PAT:
+                headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
+            response = requests.get(
+                url, headers=headers
                 )
 
             if (
@@ -86,10 +93,13 @@ class GitHubStats:
         - If the request fails, it returns an error message.
         """
         url = f"{GitHubStats.BASE_URL}/users/{username}"
-        response = requests.get(url, headers={"User-Agent": "GitHubStatsApp",
+        headers = {"User-Agent": "GitHubStatsApp",
                               "Accept": "application/vnd.github+json",
                               "X-GitHub-Api-Version": "2022-11-28",
-                              })
+                              }
+        if GitHubStats.GITHUB_PAT:
+            headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
+        response = requests.get(url, headers=headers)
 
         if (
             response.status_code == 403
@@ -129,6 +139,8 @@ class GitHubStats:
                               "Accept": "application/vnd.github+json",
                               "X-GitHub-Api-Version": "2022-11-28",
                               }
+        if GitHubStats.GITHUB_PAT:
+            headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
 
         while True:
             url = (
@@ -187,6 +199,8 @@ class GitHubStats:
                               "Accept": "application/vnd.github+json",
                               "X-GitHub-Api-Version": "2022-11-28",
                               }
+        if GitHubStats.GITHUB_PAT:
+            headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
         total_bytes = 0
 
         for repo in repos:
