@@ -241,3 +241,46 @@ class GitHubStats:
             language: round((bytes_used / total_bytes) * 100, 2)
             for language, bytes_used in user_languages.items()
         }
+
+    @staticmethod
+    def check_auth():
+        """Check if the GitHub token is being used correctly."""
+        url = "https://api.github.com/users/hassanah391"  # This requires authentication
+        headers = {
+            "User-Agent": "GitHubStatsApp",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        }
+
+        if GitHubStats.GITHUB_PAT:
+            headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
+
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            print("✅ Authentication successful!")
+            print("Authenticated as:", response.json().get("login"))
+        elif response.status_code == 401:
+            print("❌ Authentication failed! Check your GitHub token.")
+        else:
+            print(f"⚠️ Unexpected response: {response.status_code}", response.json())
+
+    @staticmethod
+    def check_rate_limit():
+        """Checks Remaining Requests"""
+        url = "https://api.github.com/rate_limit"
+        headers = {
+            "User-Agent": "GitHubStatsApp",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        }
+
+        if GitHubStats.GITHUB_PAT:
+            headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
+
+        response = requests.get(url, headers=headers)
+        data = response.json()
+
+        if "rate" in data:
+            print(f"✅ Authenticated! Remaining Requests: {data['rate']['remaining']}")
+        else:
+            print("❌ Authentication Failed!")
