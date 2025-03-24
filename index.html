@@ -1,1 +1,74 @@
-<h1>Hello, World!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Stats Web Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .header {
+            background: #333;
+            color: white;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .intro {
+            background: url('https://source.unsplash.com/1600x900/?technology,code') no-repeat center center/cover;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .intro h1 {
+            font-size: 50px;
+            margin: 10px 0;
+        }
+        .intro p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #ff6600;
+            color: white;
+            padding: 10px 20px;
+            font-size: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #cc5500;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <nav>
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+        </nav>
+    </div>
+    <section class="intro">
+        <h1>GitHub Stats Web Service</h1>
+        <p>Get real-time GitHub statistics with ease.</p>
+        <a href="https://githubstatswebservice-production.up.railway.app/" class="btn">View Project</a>
+    </section>
+</body>
+</html>
+
