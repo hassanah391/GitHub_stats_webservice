@@ -242,20 +242,25 @@ class GitHubStats:
             for language, bytes_used in user_languages.items()
         }
 
+    # Check if the GitHub token is being used correctly
     @staticmethod
     def check_auth():
         """Check if the GitHub token is being used correctly."""
-        url = "https://api.github.com/users/hassanah391"  # This requires authentication
+        url = "https://api.github.com/users/hassanah391"  # Endpoint requiring authentication
         headers = {
-            "User-Agent": "GitHubStatsApp",
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "GitHubStatsApp",  # Custom User-Agent for identification
+            "Accept": "application/vnd.github+json",  # Specify GitHub API version
+            "X-GitHub-Api-Version": "2022-11-28",  # API version
         }
 
+        # Add Authorization header if a GitHub token is available
         if GitHubStats.GITHUB_PAT:
             headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
 
+        # Make the request to the GitHub API
         response = requests.get(url, headers=headers)
+
+        # Handle response based on status code
         if response.status_code == 200:
             print("✅ Authentication successful!")
             print("Authenticated as:", response.json().get("login"))
@@ -264,22 +269,26 @@ class GitHubStats:
         else:
             print(f"⚠️ Unexpected response: {response.status_code}", response.json())
 
+    # Check the remaining API rate limit
     @staticmethod
     def check_rate_limit():
         """Checks Remaining Requests"""
-        url = "https://api.github.com/rate_limit"
+        url = "https://api.github.com/rate_limit"  # Endpoint for rate limit information
         headers = {
-            "User-Agent": "GitHubStatsApp",
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "GitHubStatsApp",  # Custom User-Agent for identification
+            "Accept": "application/vnd.github+json",  # Specify GitHub API version
+            "X-GitHub-Api-Version": "2022-11-28",  # API version
         }
 
+        # Add Authorization header if a GitHub token is available
         if GitHubStats.GITHUB_PAT:
             headers["Authorization"] = f"token {GitHubStats.GITHUB_PAT}"
 
+        # Make the request to the GitHub API
         response = requests.get(url, headers=headers)
         data = response.json()
 
+        # Check if rate limit information is available
         if "rate" in data:
             print(f"✅ Authenticated! Remaining Requests: {data['rate']['remaining']}")
         else:
