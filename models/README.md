@@ -10,12 +10,9 @@ The `models` directory contains the core logic for interacting with the GitHub A
 .
 ├── README.md
 ├── __init__.py
-├── __pycache__
-│   ├── __init__.cpython-38.pyc
-│   └── github_stats.cpython-38.pyc
 └── github_stats.py
 
-1 directory, 5 files
+0 directories, 3 files
 ```
 ## Files
 

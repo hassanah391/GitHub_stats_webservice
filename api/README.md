@@ -10,28 +10,16 @@ The `api` directory contains the code for the web service that interacts with th
 .
 ├── README.md
 ├── __init__.py
-├── __pycache__
-│   ├── __init__.cpython-38.pyc
-│   └── __init__.cpython-39.pyc
 └── v1
     ├── __init__.py
-    ├── __pycache__
-    │   ├── __init__.cpython-38.pyc
-    │   ├── __init__.cpython-39.pyc
-    │   ├── app.cpython-38.pyc
-    │   └── app.cpython-39.pyc
     ├── app.py
     ├── github_routes
     │   ├── __init__.py
-    │   ├── __pycache__
-    │   │   ├── __init__.cpython-38.pyc
-    │   │   ├── __init__.cpython-39.pyc
-    │   │   └── github_stats.cpython-38.pyc
     │   └── github_stats.py
     └── templates
         └── index.html
 
-6 directories, 16 files
+3 directories, 7 files
 ```
 ## Files
 

@@ -102,37 +102,28 @@ The GitHub Stats Webservice is deployed on Railway. You can access the live appl
     - `quit` or `exit`: Exit the CLI
 
 ## Project Structure
-``` 
+```
 > tree
 .
+├── AUTHORS
 ├── Procfile
 ├── README.md
-├── __pycache__
-│   ├── app.cpython-38.pyc
-│   └── app.cpython-39.pyc
+├── _config.yml
 ├── api
+│   ├── README.md
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── __init__.cpython-38.pyc
-│   │   └── __init__.cpython-39.pyc
 │   └── v1
 │       ├── __init__.py
-│       ├── __pycache__
-│       │   ├── __init__.cpython-38.pyc
-│       │   ├── __init__.cpython-39.pyc
-│       │   ├── app.cpython-38.pyc
-│       │   └── app.cpython-39.pyc
 │       ├── app.py
 │       ├── github_routes
 │       │   ├── __init__.py
-│       │   ├── __pycache__
-│       │   │   ├── __init__.cpython-38.pyc
-│       │   │   ├── __init__.cpython-39.pyc
-│       │   │   └── github_stats.cpython-38.pyc
 │       │   └── github_stats.py
 │       └── templates
 │           └── index.html
+├── assets
+│   └── homepage.png
 ├── console.py
+├── index.html
 ├── models
 │   ├── README.md
 │   ├── __init__.py
@@ -142,7 +133,7 @@ The GitHub Stats Webservice is deployed on Railway. You can access the live appl
 │   └── github_stats.py
 └── requirements.txt
 
-10 directories, 26 files
+7 directories, 20 files
 ```
 
 
